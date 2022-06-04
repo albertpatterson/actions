@@ -4,14 +4,11 @@ import { handleRequestInServiceWorker } from '../messaging/framework/message';
  * handle requests sent via the message system
  */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log('received message in service worker', request);
-
   return handleRequestInServiceWorker(request, sender, sendResponse);
 });
 
 const domainPopupMap = new Map<string, string>([
   ['youtube.com', 'popup/youtube/index.html'],
-  ['github.com', 'popup/github/index.html'],
 ]);
 
 const emptyPopup = 'popup/empty/index.html';

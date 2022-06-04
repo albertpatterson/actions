@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-starter",
+  "name": "actions",
   "version": "1.0.0",
-  "description": "A starter project for a Chrome browser extension",
+  "description": "A browser extension that performs actions on the page",
   "main": "index.js",
   "scripts": {
     "build": "node build/prod -r",

@@ -3,7 +3,7 @@
   "name": "Actions",
   "version": "1.0.0",
 
-  "description": "Perform actions on the open tab",
+  "description": "Perform actions on the page",
 
   "action": {
     "default_title": "Actions",
@@ -30,5 +30,5 @@
     }
   ],
   "homepage_url": "https://github.com/albertpatterson/chrome-extension-starter",
-  "permissions": ["tabs", "browser_action"]
+  "permissions": ["tabs"]
 }
