@@ -19,4 +19,4 @@ Browser action to run actions on the page; made with [create-extension](https://
 - Clone this repository
 - `npm install`
 - `npm run build-dev`
-- [Load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked)
+- [Load an unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked). The unpacked extension will be build in dist/unpacked.
