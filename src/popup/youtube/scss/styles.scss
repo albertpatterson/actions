@@ -1,0 +1,10 @@
+body {
+  #action-button-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .action-button {
+    min-width: 50px;
+  }
+}

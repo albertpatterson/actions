@@ -1,13 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Chrome-Extension-Starter",
+  "name": "Actions",
   "version": "1.0.0",
 
-  "description": "The next great extension to take the Web Store by storm - Built with Chrome-Extension-Starter.",
+  "description": "Perform actions on the open tab",
 
   "action": {
-    "default_title": "Chrome Extension Starter",
-    "default_popup": "popup/index.html",
+    "default_title": "Actions",
     "default_icon": {
       "16": "icon/icon16.png",
       "24": "icon/icon24.png",
@@ -28,12 +27,8 @@
     {
       "matches": ["https://*/*", "http://*/*"],
       "js": ["injected/all_pages.js"]
-    },
-    {
-      "matches": ["https://*/home/*", "http://*/home/*"],
-      "js": ["injected/home_page.js"]
     }
   ],
   "homepage_url": "https://github.com/albertpatterson/chrome-extension-starter",
-  "permissions": []
+  "permissions": ["tabs", "browser_action"]
 }
