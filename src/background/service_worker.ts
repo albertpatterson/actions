@@ -57,14 +57,17 @@ async function updatePopupForFocusedTab() {
   const popup = getPopup(activeTab?.url);
   if (popup) {
     await chrome.action.enable();
-    await chrome.action.setIcon({ path: { '16': '/icon/icon16.png' } });
-    await chrome.action.setPopup({ popup });
+    await chrome.action.setIcon({
+      path: { '16': '/icon/icon16.png' },
+      tabId: activeTab.id,
+    });
+    await chrome.action.setPopup({ popup, tabId: activeTab.id });
   } else {
     await chrome.action.disable();
     await chrome.action.setIcon({
       path: { '16': '/icon/disabled_icon16.png' },
     });
-    await chrome.action.setPopup({ popup: '' });
+    await chrome.action.setPopup({ popup: '', tabId: activeTab.id });
   }
 }
 
