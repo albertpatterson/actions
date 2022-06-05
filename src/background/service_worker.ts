@@ -27,8 +27,6 @@ const domainPopupMap = new Map<string, string>([
   ['youtube.com', 'popup/youtube/index.html'],
 ]);
 
-const emptyPopup = 'popup/empty/index.html';
-
 function testAllDomains(url: string, domain: string) {
   const httpWwwDomain = 'http://www.' + domain;
   const httpsWwwwDomain = 'https://www.' + domain;
@@ -50,7 +48,24 @@ function getPopup(url?: string) {
       }
     }
   }
-  return emptyPopup;
+  return null;
+}
+
+async function updatePopupForFocusedTab() {
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+  const activeTab = tabs[0];
+  const popup = getPopup(activeTab?.url);
+  if (popup) {
+    await chrome.action.enable();
+    await chrome.action.setIcon({ path: { '16': '/icon/icon16.png' } });
+    await chrome.action.setPopup({ popup });
+  } else {
+    await chrome.action.disable();
+    await chrome.action.setIcon({
+      path: { '16': '/icon/disabled_icon16.png' },
+    });
+    await chrome.action.setPopup({ popup: '' });
+  }
 }
 
 /**
@@ -58,8 +73,9 @@ function getPopup(url?: string) {
  */
 (async () => {
   console.log('Extension loaded');
-  chrome.tabs.onActivated.addListener(async (activeInfo) => {
-    const tab = await chrome.tabs.get(activeInfo.tabId);
-    chrome.action.setPopup({ popup: getPopup(tab.url) });
-  });
+  chrome.tabs.onActivated.addListener(updatePopupForFocusedTab);
+
+  chrome.windows.onFocusChanged.addListener(updatePopupForFocusedTab);
+
+  await updatePopupForFocusedTab();
 })();
