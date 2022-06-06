@@ -54,20 +54,22 @@ function getPopup(url?: string) {
 async function updatePopupForFocusedTab() {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
   const activeTab = tabs[0];
-  const popup = getPopup(activeTab?.url);
-  if (popup) {
-    await chrome.action.enable();
-    await chrome.action.setIcon({
-      path: { '16': '/icon/icon16.png' },
-      tabId: activeTab.id,
-    });
-    await chrome.action.setPopup({ popup, tabId: activeTab.id });
-  } else {
-    await chrome.action.disable();
-    await chrome.action.setIcon({
-      path: { '16': '/icon/disabled_icon16.png' },
-    });
-    await chrome.action.setPopup({ popup: '', tabId: activeTab.id });
+  if (activeTab) {
+    const popup = getPopup(activeTab.url);
+    if (popup) {
+      await chrome.action.enable();
+      await chrome.action.setIcon({
+        path: { '16': '/icon/icon16.png' },
+        tabId: activeTab.id,
+      });
+      await chrome.action.setPopup({ popup, tabId: activeTab.id });
+    } else {
+      await chrome.action.disable();
+      await chrome.action.setIcon({
+        path: { '16': '/icon/disabled_icon16.png' },
+      });
+      await chrome.action.setPopup({ popup: '', tabId: activeTab.id });
+    }
   }
 }
 
@@ -77,6 +79,8 @@ async function updatePopupForFocusedTab() {
 (async () => {
   console.log('Extension loaded');
   chrome.tabs.onActivated.addListener(updatePopupForFocusedTab);
+
+  chrome.tabs.onUpdated.addListener(updatePopupForFocusedTab);
 
   chrome.windows.onFocusChanged.addListener(updatePopupForFocusedTab);
 
