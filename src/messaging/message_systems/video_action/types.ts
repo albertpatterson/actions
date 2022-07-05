@@ -36,11 +36,11 @@ export enum Action {
 /**
  * The type of data passed with the request
  */
-export interface YoutubeActionRequestData {
+export interface VideoActionRequestData {
   action: Action;
 }
 
 /**
  * The type of data passed with the response
  */
-export interface YoutubeActionRequestResponseData {}
+export interface VideoActionRequestResponseData {}

@@ -20,7 +20,7 @@ import {
   messageSystem as getActiveTabDetailsMessageSystem,
   createRequest as getActiveTabDetailsCreateRequest,
 } from '../../../messaging/message_systems/get_active_tab_details/message_system';
-import { getActions } from './get_actions';
+import { getActions } from './get_actions/get_actions';
 
 (async () => {
   console.log('loading');

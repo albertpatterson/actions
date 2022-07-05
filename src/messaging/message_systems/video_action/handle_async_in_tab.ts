@@ -15,9 +15,9 @@
  */
 
 import {
-  YoutubeActionRequestData,
+  VideoActionRequestData,
   Action,
-  YoutubeActionRequestResponseData,
+  VideoActionRequestResponseData,
 } from './types';
 import { Request, ResponseResult } from '../../framework/types';
 import { goBack } from './actions/go_back/go_back';
@@ -29,9 +29,9 @@ import { setSpeeds } from './actions/set_speeds/set_speeds';
 import { context } from './context';
 
 export async function handleAsyncInTab(
-  request: Request<YoutubeActionRequestData>,
+  request: Request<VideoActionRequestData>,
   sender: chrome.runtime.MessageSender
-): Promise<ResponseResult<YoutubeActionRequestResponseData>> {
+): Promise<ResponseResult<VideoActionRequestResponseData>> {
   performAction(request.data.action);
 
   return {

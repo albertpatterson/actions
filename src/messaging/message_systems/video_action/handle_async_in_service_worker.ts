@@ -21,14 +21,14 @@
 import { messageSystem as simpleMessageSystem } from './message_system';
 import { ResponseResult, Request } from '../../framework/types';
 import {
-  YoutubeActionRequestData,
-  YoutubeActionRequestResponseData,
+  VideoActionRequestData,
+  VideoActionRequestResponseData,
 } from './types';
 
 export async function handleAsyncInServiceWorker(
-  request: Request<YoutubeActionRequestData>,
+  request: Request<VideoActionRequestData>,
   sender: chrome.runtime.MessageSender
-): Promise<ResponseResult<YoutubeActionRequestResponseData>> {
+): Promise<ResponseResult<VideoActionRequestResponseData>> {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
   const activeTab = tabs[0];
 
