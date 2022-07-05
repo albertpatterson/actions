@@ -19,6 +19,22 @@ import { LabeledAction } from './types';
 const ACTION_BUTTON_CONTAINER_ID = 'action-button-container';
 
 export function drawActionsButtons(labeledActions: LabeledAction[]) {
+  console.log('drawActionsButtons', labeledActions);
+  if (labeledActions.length > 0) {
+    drawActionsButtonsNonEmpty(labeledActions);
+  } else {
+    drawActionsButtonsEmpty();
+  }
+}
+
+export function drawError(msg: string) {
+  const actionButtonContainer = resetActionButtonContainer();
+  actionButtonContainer.innerText = msg;
+  actionButtonContainer.classList.add('error-msg');
+  document.body.appendChild(actionButtonContainer);
+}
+
+function resetActionButtonContainer() {
   const oldActionButtonContainer = document.getElementById(
     ACTION_BUTTON_CONTAINER_ID
   );
@@ -30,6 +46,16 @@ export function drawActionsButtons(labeledActions: LabeledAction[]) {
 
   const actionButtonContainer = document.createElement('div');
   actionButtonContainer.id = ACTION_BUTTON_CONTAINER_ID;
+
+  return actionButtonContainer;
+}
+
+function drawActionsButtonsEmpty() {
+  drawError('No actions available');
+}
+
+function drawActionsButtonsNonEmpty(labeledActions: LabeledAction[]) {
+  const actionButtonContainer = resetActionButtonContainer();
 
   const actionButtons = labeledActions.map(createActionButton);
   for (const actionButton of actionButtons) {

@@ -14,11 +14,31 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { handleRequestInServiceWorker } from '../messaging/framework/message';
-
 /**
- * handle requests sent via the message system
+ * Update this function to contain the logic run in the tab when this request type is recieved.
  */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  return handleRequestInServiceWorker(request, sender, sendResponse);
-});
+
+import {
+  GetActiveTabDetailsRequestData,
+  GetActiveTabDetailsRequestResponseData,
+} from './types';
+import { Request, ResponseResult } from '../../framework/types';
+
+export async function handleAsyncInTab(
+  request: Request<GetActiveTabDetailsRequestData>,
+  sender: chrome.runtime.MessageSender
+): Promise<ResponseResult<GetActiveTabDetailsRequestResponseData>> {
+  console.log(
+    `Handled get active Page details Request with data "${request.data}"`
+  );
+
+  return {
+    succeeded: true,
+    data: {
+      tabDetails: {
+        href: document.location.href,
+        hasVideo: Boolean(document.querySelector('video')),
+      },
+    },
+  };
+}

@@ -14,11 +14,17 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { handleRequestInServiceWorker } from '../messaging/framework/message';
-
 /**
- * handle requests sent via the message system
+ * This module should not need to be updated for new request types
  */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  return handleRequestInServiceWorker(request, sender, sendResponse);
-});
+
+import { createMessageSystem } from '../../framework/base_message_system';
+import { handleAsyncInTab } from './handle_async_in_tab';
+import { handleAsyncInServiceWorker } from './handle_async_in_service_worker';
+import { NAME } from './types';
+
+export const { messageSystem, createRequest } = createMessageSystem(
+  NAME,
+  handleAsyncInTab,
+  handleAsyncInServiceWorker
+);

@@ -14,11 +14,28 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { handleRequestInServiceWorker } from '../messaging/framework/message';
+/**
+ * Update these types for each type of request
+ */
+
+/** the name of the type of request (must be unique) */
+export const NAME = 'get active page details request';
+
+/** Type of details about the active tab */
+export interface TabDetails {
+  href: string;
+  hasVideo: boolean;
+}
 
 /**
- * handle requests sent via the message system
+ * The type of data passed with the request
  */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  return handleRequestInServiceWorker(request, sender, sendResponse);
-});
+export interface GetActiveTabDetailsRequestData {}
+
+/**
+ * The type of data passed with the response
+ */
+export interface GetActiveTabDetailsRequestResponseData {
+  tabDetails?: TabDetails;
+  error?: string;
+}

@@ -7,6 +7,7 @@
 
   "action": {
     "default_title": "Actions",
+    "default_popup": "popup/default/index.html",
     "default_icon": {
       "16": "icon/icon16.png",
       "24": "icon/icon24.png",

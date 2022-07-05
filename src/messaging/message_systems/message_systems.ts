@@ -19,9 +19,11 @@
  */
 
 import { BaseMessageSystem } from '../framework/base_message_system';
-import { messageSystem as simpleMessageSystem } from './youtube_action/message_system';
+import { messageSystem as videoActionMessageSystem } from './youtube_action/message_system';
+import { messageSystem as getActiveTabDetailsMessageSystem } from './get_active_tab_details/message_system';
 
 export const messageSystems: Array<BaseMessageSystem<{}, {}>> = [
-  simpleMessageSystem,
+  videoActionMessageSystem,
+  getActiveTabDetailsMessageSystem,
   // Add new message systems here
 ];
