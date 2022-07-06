@@ -1,16 +1,25 @@
 body {
+  margin: 0;
+
   #action-button-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    width: max-content;
+    max-width: 800px;
+    justify-content: center;
   }
 
   .action-button {
-    min-width: 50px;
+    white-space: noWrap;
   }
 
-  .error-msg {
-    background-color: rgb(250, 181, 181);
-    max-width: 400px;
-    white-space: noWrap;
+  .message {
+    background-color: #d7ffd7;
+    margin: 0;
+
+    .error {
+      background-color: #f1e0e0;
+    }
   }
 }

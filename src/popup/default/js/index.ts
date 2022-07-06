@@ -15,18 +15,24 @@
  */
 
 import '../scss/styles.scss';
-import { drawActionsButtons, drawError } from './view';
+import { drawActionsButtons, showMessage, showToast } from './view';
 import {
   messageSystem as getActiveTabDetailsMessageSystem,
-  createRequest as getActiveTabDetailsCreateRequest,
+  createRequest as createGetActiveTabDetailsRequest,
 } from '../../../messaging/message_systems/get_active_tab_details/message_system';
-import { getActions } from './get_actions/get_actions';
+import {
+  messageSystem as doActionMessageSystem,
+  createRequest as createdoActionRequest,
+} from '../../../messaging/message_systems/do_action/message_system';
+import { getActions as getLabeledActions } from './get_actions/get_actions';
+import { actions } from '../../../actions/base';
+import { TabDetails } from '../../../messaging/message_systems/get_active_tab_details/types';
 
 (async () => {
   console.log('loading');
   const getActiveTabDetailsResponse =
     await getActiveTabDetailsMessageSystem.sendInTab(
-      getActiveTabDetailsCreateRequest({})
+      createGetActiveTabDetailsRequest({})
     );
 
   console.log(getActiveTabDetailsResponse);
@@ -34,12 +40,41 @@ import { getActions } from './get_actions/get_actions';
   if (getActiveTabDetailsResponse) {
     const activeTabDetails = getActiveTabDetailsResponse.data.tabDetails;
     if (activeTabDetails) {
-      const actions = getActions(activeTabDetails);
-      drawActionsButtons(actions);
+      const doAction = createActionDoer(activeTabDetails);
+
+      const labeledActions = getLabeledActions(activeTabDetails);
+      drawActionsButtons(labeledActions, doAction);
     } else {
-      drawError('no active tab details data');
+      showMessage('no active tab details data', true);
     }
   } else {
-    drawError('no active tab details response');
+    showMessage('no active tab details response', true);
   }
 })();
+
+function createActionDoer(tabDetails: TabDetails) {
+  return async (actionName: string) => {
+    const request = createdoActionRequest({
+      tabDetails,
+      actionName,
+    });
+    const result = await doActionMessageSystem.sendInTab(request);
+
+    if (result) {
+      if (result.data.result) {
+        const msg = actions[actionName].handleResult(result.data.result);
+        if (msg) {
+          showToast(msg);
+        }
+      } else {
+        const error =
+          result.data.error ||
+          `no data in response returned for action ${actionName}`;
+        showToast(error, true);
+      }
+    } else {
+      const error = `no response returned for action ${actionName}`;
+      showToast(error, true);
+    }
+  };
+}

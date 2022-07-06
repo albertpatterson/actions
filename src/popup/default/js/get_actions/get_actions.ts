@@ -1,12 +1,26 @@
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
-import { LabeledAction } from '../types';
-import { getVideoActions } from './get_video_actions';
-export function getActions(tabDetails: TabDetails) {
-  const actions: LabeledAction[] = [];
+import { ActionLabels } from '../types';
+// import { getVideoActions } from './get_video_actions';
+import { actions } from '../../../../actions/base';
 
-  if (tabDetails.hasVideo) {
-    actions.push(...getVideoActions());
+export function getActions(tabDetails: TabDetails) {
+  const actionData = [];
+  for (const actionName in actions) {
+    const action = actions[actionName];
+    actionData.push({
+      actionName,
+      label: action.label,
+      tooltip: action.tooltip,
+    });
   }
 
-  return actions;
+  return actionData;
+
+  // const actions: LabeledAction[] = [];
+
+  // if (tabDetails.hasVideo) {
+  //   actions.push(...getVideoActions());
+  // }
+
+  // return actions;
 }

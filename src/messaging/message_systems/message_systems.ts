@@ -19,11 +19,13 @@
  */
 
 import { BaseMessageSystem } from '../framework/base_message_system';
-import { messageSystem as videoActionMessageSystem } from './video_action/message_system';
+// import { messageSystem as videoActionMessageSystem } from './video_action/message_system';
 import { messageSystem as getActiveTabDetailsMessageSystem } from './get_active_tab_details/message_system';
+import { messageSystem as doActionMessageSystem } from './do_action/message_system';
 
 export const messageSystems: Array<BaseMessageSystem<{}, {}>> = [
-  videoActionMessageSystem,
+  // videoActionMessageSystem,
   getActiveTabDetailsMessageSystem,
+  doActionMessageSystem,
   // Add new message systems here
 ];

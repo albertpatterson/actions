@@ -14,24 +14,25 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { LabeledAction } from './types';
+import { ActionLabels } from './types';
 
+const CONTAINER_ID = 'container';
 const ACTION_BUTTON_CONTAINER_ID = 'action-button-container';
 
-export function drawActionsButtons(labeledActions: LabeledAction[]) {
+export function drawActionsButtons(
+  labeledActions: ActionLabels[],
+  doAction: (actionName: string) => void
+) {
   console.log('drawActionsButtons', labeledActions);
   if (labeledActions.length > 0) {
-    drawActionsButtonsNonEmpty(labeledActions);
+    drawActionsButtonsNonEmpty(labeledActions, doAction);
   } else {
     drawActionsButtonsEmpty();
   }
 }
 
-export function drawError(msg: string) {
-  const actionButtonContainer = resetActionButtonContainer();
-  actionButtonContainer.innerText = msg;
-  actionButtonContainer.classList.add('error-msg');
-  document.body.appendChild(actionButtonContainer);
+function getContainer() {
+  return document.getElementById(CONTAINER_ID)!;
 }
 
 function resetActionButtonContainer() {
@@ -51,25 +52,60 @@ function resetActionButtonContainer() {
 }
 
 function drawActionsButtonsEmpty() {
-  drawError('No actions available');
+  showMessage('No actions available', true);
 }
 
-function drawActionsButtonsNonEmpty(labeledActions: LabeledAction[]) {
+function drawActionsButtonsNonEmpty(
+  actionLabels: ActionLabels[],
+  doAction: (actionName: string) => void
+) {
   const actionButtonContainer = resetActionButtonContainer();
 
-  const actionButtons = labeledActions.map(createActionButton);
+  const actionButtons = actionLabels.map((actionLabel) =>
+    createActionButton(actionLabel, doAction)
+  );
   for (const actionButton of actionButtons) {
     actionButtonContainer.appendChild(actionButton);
   }
 
-  document.body.appendChild(actionButtonContainer);
+  getContainer().appendChild(actionButtonContainer);
 }
 
-function createActionButton(labeledAction: LabeledAction) {
+function createActionButton(
+  actionLabel: ActionLabels,
+  doAction: (actionName: string) => void
+) {
   const actionButton = document.createElement('button');
-  actionButton.innerText = labeledAction.label;
-  actionButton.title = labeledAction.tooltip;
-  actionButton.addEventListener('click', labeledAction.action);
+  actionButton.innerText = actionLabel.label;
+  actionButton.title = actionLabel.tooltip;
+  actionButton.addEventListener('click', () =>
+    doAction(actionLabel.actionName)
+  );
   actionButton.classList.add('action-button');
   return actionButton;
+}
+
+export function showMessage(msg: string, isError = false) {
+  const container = getContainer();
+  if (!container) {
+    throw new Error('no container');
+  }
+
+  const message = document.createElement('p');
+  message.classList.add('message');
+  if (isError) {
+    message.classList.add('error');
+  }
+  message.innerText = msg;
+  container.appendChild(message);
+
+  return { container, message };
+}
+
+export function showToast(msg: string, isError = false) {
+  const { container, message } = showMessage(msg, isError);
+
+  setTimeout(() => {
+    container.removeChild(message);
+  }, 5e3);
 }

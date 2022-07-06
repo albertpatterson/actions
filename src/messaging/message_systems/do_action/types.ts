@@ -14,8 +14,27 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-export interface ActionLabels {
-  label: string;
-  tooltip: string;
+import { TabDetails } from '../get_active_tab_details/types';
+
+/**
+ * Update these types for each type of request
+ */
+
+/** the name of the type of request (must be unique) */
+export const NAME = 'do action request';
+
+/**
+ * The type of data passed with the request
+ */
+export interface DoActionRequestData {
   actionName: string;
+  tabDetails: TabDetails;
+}
+
+/**
+ * The type of data passed with the response
+ */
+export interface DoActionRequestResponseData {
+  result?: string;
+  error?: string;
 }
