@@ -16,12 +16,26 @@
 
 import { skip as utilSkip } from '../../video/utils';
 
-import { context } from '../../context';
+import { Context } from '../../context';
+import { Action } from '../../../types';
+import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
+import { createAction } from '../../../shared';
 
-export function skip() {
+export function skip(context: Context) {
   if (context.hasVidSkipInterval()) {
     context.clearVidSkipInterval();
   } else {
     utilSkip(context, 10);
   }
+}
+
+export function getAction(context: Context): Action {
+  return createAction({
+    label: '->->',
+    tooltip: 'Skip by 10s',
+    tabFcn: () => {
+      skip(context);
+    },
+    filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+  });
 }

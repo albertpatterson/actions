@@ -14,33 +14,25 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-/**
- * Update these types for each type of request
- */
+import { getVideos, setSpeeds } from '../../video/utils';
+import { Context } from '../../context';
+import { Action } from '../../../types';
+import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
+import { createAction } from '../../../shared';
 
-/** the name of the type of request (must be unique) */
-export const NAME = 'youtube action request';
-
-/** the types of actions that can be performed */
-export enum Action {
-  BACK,
-  FORWARD,
-  SKIP,
-  SLOW,
-  FAST,
-  SPEED_1,
-  SPEED_3,
-  SPEED_4,
+export function slowDown(context: Context) {
+  const videos = getVideos();
+  const speed = videos[0].playbackRate - 0.5;
+  setSpeeds(context, speed, videos);
 }
 
-/**
- * The type of data passed with the request
- */
-export interface VideoActionRequestData {
-  action: Action;
+export function getAction(context: Context): Action {
+  return createAction({
+    label: '<<',
+    tooltip: 'Reduce speed by 0.5',
+    tabFcn: () => {
+      slowDown(context);
+    },
+    filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+  });
 }
-
-/**
- * The type of data passed with the response
- */
-export interface VideoActionRequestResponseData {}

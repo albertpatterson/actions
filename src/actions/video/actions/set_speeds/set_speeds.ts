@@ -16,8 +16,39 @@
 
 import { getVideos, setSpeeds as setSpeedsUtil } from '../../video/utils';
 import { Context } from '../../context';
+import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
+import { createAction } from '../../../shared';
 
 export function setSpeeds(context: Context, speed: number) {
   const videos = getVideos();
   setSpeedsUtil(context, speed, videos);
+}
+
+export function getActions(context: Context) {
+  return {
+    setSpeed1: createAction({
+      label: '1',
+      tooltip: 'Set speed to 1',
+      tabFcn: () => {
+        setSpeeds(context, 1);
+      },
+      filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+    }),
+    setSpeed3: createAction({
+      label: '3',
+      tooltip: 'Set speed to 3',
+      tabFcn: () => {
+        setSpeeds(context, 3);
+      },
+      filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+    }),
+    setSpeed4: createAction({
+      label: '4',
+      tooltip: 'Set speed to 4',
+      tabFcn: () => {
+        setSpeeds(context, 4);
+      },
+      filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+    }),
+  };
 }

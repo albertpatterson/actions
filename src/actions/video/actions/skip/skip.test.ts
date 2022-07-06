@@ -14,30 +14,32 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
- import { getVideos, setSpeeds } from '../../video/utils';
-import { speedUp } from './speed_up';
+import { skip as skipUtil } from '../../video/utils';
+import { skip } from './skip';
 import { context } from '../../context';
 
 jest.mock('../../video/utils');
+jest.useFakeTimers();
+jest.spyOn(global, 'setInterval');
 
-const getVideosMock = getVideos as jest.MockedFunction<typeof getVideos>;
+describe('skipLoop', () => {
+  beforeEach(() => {
+    context.clearVidSkipInterval();
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+  });
 
-it('increases playback rate by .5', () => {
-  let playbackRate = 2;
+  it('begins skipping if not currently skipping', () => {
+    expect(context.hasVidSkipInterval()).toBe(false);
+    skip(context);
+    expect(skipUtil).toHaveBeenCalledWith(context, 10);
+  });
 
-  const mockVideo = {
-    set playbackRate(playbackRate) {},
-    get playbackRate() {
-      return playbackRate;
-    },
-  } as HTMLVideoElement;
-
-  getVideosMock.mockImplementation(() => [mockVideo]);
-
-  speedUp();
-  expect(setSpeeds).toBeCalledWith(context, 2.5, [mockVideo]);
-  playbackRate = 2.5;
-
-  speedUp();
-  expect(setSpeeds).toBeCalledWith(context, 3, [mockVideo]);
+  it('begins skipping if not currently skipping', () => {
+    const clearSkipIntervalSpy = jest.spyOn(context, 'clearVidSkipInterval');
+    context.setVidSkipInterval(() => {}, 123);
+    skip(context);
+    expect(skipUtil).not.toHaveBeenCalled();
+    expect(clearSkipIntervalSpy).toHaveBeenCalled();
+  });
 });

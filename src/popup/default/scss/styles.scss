@@ -18,7 +18,7 @@ body {
     background-color: #d7ffd7;
     margin: 0;
 
-    .error {
+    &.error {
       background-color: #f1e0e0;
     }
   }

@@ -14,9 +14,25 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { decrementTime } from '../../video/utils';
-import { context } from '../../context';
+import { getVideos, setSpeeds } from '../../video/utils';
+import { Context } from '../../context';
+import { Action } from '../../../types';
+import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
+import { createAction } from '../../../shared';
 
-export function goBack() {
-  decrementTime(context, 10, undefined, true);
+export function speedUp(context: Context) {
+  const videos = getVideos();
+  const speed = videos[0].playbackRate + 0.5;
+  setSpeeds(context, speed, videos);
+}
+
+export function getAction(context: Context): Action {
+  return createAction({
+    label: '>>',
+    tooltip: 'Increase speed by 0.5',
+    tabFcn: () => {
+      speedUp(context);
+    },
+    filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+  });
 }

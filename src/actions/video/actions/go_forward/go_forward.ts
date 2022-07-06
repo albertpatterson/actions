@@ -14,11 +14,17 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { getVideos, setSpeeds } from '../../video/utils';
+import { incrementTime } from '../../video/utils';
 import { context } from '../../context';
+import { Action } from '../../../types';
+import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
+import { createAction } from '../../../shared';
 
-export function speedUp() {
-  const videos = getVideos();
-  const speed = videos[0].playbackRate + 0.5;
-  setSpeeds(context, speed, videos);
-}
+export const action: Action = createAction({
+  label: '->',
+  tooltip: 'Go Forwrd 10s',
+  tabFcn: () => {
+    incrementTime(context, 10);
+  },
+  filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+});

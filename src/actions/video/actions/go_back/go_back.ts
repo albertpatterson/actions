@@ -14,17 +14,17 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-/**
- * This module should not need to be updated for new request types
- */
+import { decrementTime } from '../../video/utils';
+import { context } from '../../context';
+import { Action } from '../../../types';
+import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
+import { createAction } from '../../../shared';
 
-import { createMessageSystem } from '../../framework/base_message_system';
-import { handleAsyncInTab } from './handle_async_in_tab';
-import { handleAsyncInServiceWorker } from './handle_async_in_service_worker';
-import { NAME } from './types';
-
-export const { messageSystem, createRequest } = createMessageSystem(
-  NAME,
-  handleAsyncInTab,
-  handleAsyncInServiceWorker
-);
+export const action: Action = createAction({
+  label: '<-',
+  tooltip: 'Go back 10s',
+  tabFcn: () => {
+    decrementTime(context, 10, undefined, true);
+  },
+  filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
+});

@@ -20,7 +20,7 @@
 
 import { DoActionRequestData, DoActionRequestResponseData } from './types';
 import { Request, ResponseResult } from '../../framework/types';
-import { actions } from '../../../actions/base';
+import { fullActionSet } from '../../../actions';
 
 export async function handleAsyncInTab(
   request: Request<DoActionRequestData>,
@@ -33,7 +33,7 @@ export async function handleAsyncInTab(
     `Handled do action Request with name "${actionName}" on tab with title "${document.title}"`
   );
 
-  const action = actions[actionName];
+  const action = fullActionSet[actionName];
   if (!action) {
     return {
       succeeded: false,

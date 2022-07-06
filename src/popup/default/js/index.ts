@@ -24,9 +24,12 @@ import {
   messageSystem as doActionMessageSystem,
   createRequest as createdoActionRequest,
 } from '../../../messaging/message_systems/do_action/message_system';
-import { getActions as getLabeledActions } from './get_actions/get_actions';
-import { actions } from '../../../actions/base';
+import {
+  getActionSet as getFilteredActionSet,
+  fullActionSet,
+} from '../../../actions';
 import { TabDetails } from '../../../messaging/message_systems/get_active_tab_details/types';
+import { ActionSet } from '../../../actions/types';
 
 (async () => {
   console.log('loading');
@@ -40,9 +43,10 @@ import { TabDetails } from '../../../messaging/message_systems/get_active_tab_de
   if (getActiveTabDetailsResponse) {
     const activeTabDetails = getActiveTabDetailsResponse.data.tabDetails;
     if (activeTabDetails) {
+      const filteredActionSet = getFilteredActionSet(activeTabDetails);
       const doAction = createActionDoer(activeTabDetails);
 
-      const labeledActions = getLabeledActions(activeTabDetails);
+      const labeledActions = getActionLabels(filteredActionSet);
       drawActionsButtons(labeledActions, doAction);
     } else {
       showMessage('no active tab details data', true);
@@ -61,20 +65,35 @@ function createActionDoer(tabDetails: TabDetails) {
     const result = await doActionMessageSystem.sendInTab(request);
 
     if (result) {
-      if (result.data.result) {
-        const msg = actions[actionName].handleResult(result.data.result);
-        if (msg) {
-          showToast(msg);
-        }
-      } else {
-        const error =
-          result.data.error ||
-          `no data in response returned for action ${actionName}`;
-        showToast(error, true);
+      const reportData = fullActionSet[actionName].handleResult(
+        result.data.result
+      );
+
+      if (reportData) {
+        const { message, isError } = reportData;
+        showToast(message, isError);
+      }
+
+      if (result.data.error) {
+        showToast(result.data.error, true);
       }
     } else {
       const error = `no response returned for action ${actionName}`;
       showToast(error, true);
     }
   };
+}
+
+export function getActionLabels(actionSet: ActionSet) {
+  const actionLabels = [];
+  for (const actionName in actionSet) {
+    const action = actionSet[actionName];
+    actionLabels.push({
+      actionName,
+      label: action.label,
+      tooltip: action.tooltip,
+    });
+  }
+
+  return actionLabels;
 }
