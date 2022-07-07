@@ -17,14 +17,21 @@
 export function pause(waitTime: number): Promise<void> {
   return new Promise((res) => {
     setTimeout(() => {
-      console.log('pause done');
       res();
     }, waitTime);
   });
 }
 
+export function randClamped(min: number, max: number) {
+  return min + Math.random() * (max - min);
+}
+
+export function randClampedInt(min: number, max: number) {
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
+
 export function pauseRand(min: number, max: number) {
-  const wait = min + Math.floor(Math.random() * (max - min + 1));
+  const wait = randClamped(min, max);
   return pause(wait);
 }
 
@@ -60,7 +67,7 @@ export function runRandInterval(fcn: () => void, min: number, max: number) {
     while (!done) {
       fcn();
 
-      const wait = min + Math.floor(Math.random() * (max - min + 1));
+      const wait = randClamped(min, max);
       await pause(wait);
     }
   })();
@@ -69,7 +76,21 @@ export function runRandInterval(fcn: () => void, min: number, max: number) {
 }
 
 export function setRandTimeout(fcn: () => void, min: number, max: number) {
-  const wait = min + Math.floor(Math.random() * (max - min + 1));
+  const wait = randClamped(min, max);
 
   return setTimeout(fcn, wait);
+}
+
+export function waitRandThenDo<T>(
+  fcn: () => T,
+  min: number,
+  max: number
+): Promise<T> {
+  return new Promise((res) => {
+    const wait = randClamped(min, max);
+    setTimeout(() => {
+      const out = fcn();
+      res(out);
+    }, wait);
+  });
 }
