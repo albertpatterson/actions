@@ -6,6 +6,7 @@ export function createAction(
   return {
     filter: () => true,
     handleResult: async () => null,
+    initMessage: null,
     ...part,
   };
 }

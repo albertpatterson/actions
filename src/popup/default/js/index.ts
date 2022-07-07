@@ -62,12 +62,19 @@ function createActionDoer(tabDetails: TabDetails) {
       tabDetails,
       actionName,
     });
+
+    const action = fullActionSet[actionName];
+
+    let removeInitMessage = () => {};
+    if (action.initMessage) {
+      removeInitMessage = showMessage(action.initMessage);
+    }
+
     const result = await doActionMessageSystem.sendInTab(request);
 
     if (result) {
-      const reportData = await fullActionSet[actionName].handleResult(
-        result.data.result
-      );
+      const reportData = await action.handleResult(result.data.result);
+      removeInitMessage();
 
       if (reportData) {
         const { message, isError } = reportData;
@@ -78,6 +85,7 @@ function createActionDoer(tabDetails: TabDetails) {
         showToast(result.data.error, true);
       }
     } else {
+      removeInitMessage();
       const error = `no response returned for action ${actionName}`;
       showToast(error, true);
     }

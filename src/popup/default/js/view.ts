@@ -99,13 +99,13 @@ export function showMessage(msg: string, isError = false) {
   message.innerText = msg;
   container.appendChild(message);
 
-  return { container, message };
+  return () => container.removeChild(message);
 }
 
 export function showToast(msg: string, isError = false) {
-  const { container, message } = showMessage(msg, isError);
+  const removeMessage = showMessage(msg, isError);
 
   setTimeout(() => {
-    container.removeChild(message);
+    removeMessage();
   }, 5e3);
 }

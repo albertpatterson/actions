@@ -3,6 +3,7 @@ import { TabDetails } from '../messaging/message_systems/get_active_tab_details/
 export interface Action {
   label: string;
   tooltip: string;
+  initMessage: string | null;
   tabFcn: (tabDetails: TabDetails) => Promise<string | void>;
   filter: (tabDetails: TabDetails) => boolean;
   handleResult: (
