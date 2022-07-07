@@ -3,11 +3,11 @@ import { TabDetails } from '../messaging/message_systems/get_active_tab_details/
 export interface Action {
   label: string;
   tooltip: string;
-  tabFcn: (tabDetails: TabDetails) => string | void;
+  tabFcn: (tabDetails: TabDetails) => Promise<string | void>;
   filter: (tabDetails: TabDetails) => boolean;
   handleResult: (
     result?: string
-  ) => { message: string; isError: boolean } | null;
+  ) => Promise<{ message: string; isError: boolean } | null>;
 }
 
 export type ActionSet = { [name: string]: Action };

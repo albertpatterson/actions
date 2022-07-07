@@ -43,7 +43,7 @@ export async function handleAsyncInTab(
     };
   }
 
-  const result = action.tabFcn(tabDetails) || undefined;
+  const result = (await action.tabFcn(tabDetails)) || undefined;
 
   console.log(`returning successful result in tab with result "${result}"`);
 

@@ -29,7 +29,7 @@ export function getActions(context: Context) {
     setSpeed1: createAction({
       label: '1',
       tooltip: 'Set speed to 1',
-      tabFcn: () => {
+      tabFcn: async () => {
         setSpeeds(context, 1);
       },
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
@@ -37,7 +37,7 @@ export function getActions(context: Context) {
     setSpeed3: createAction({
       label: '3',
       tooltip: 'Set speed to 3',
-      tabFcn: () => {
+      tabFcn: async () => {
         setSpeeds(context, 3);
       },
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
@@ -45,7 +45,7 @@ export function getActions(context: Context) {
     setSpeed4: createAction({
       label: '4',
       tooltip: 'Set speed to 4',
-      tabFcn: () => {
+      tabFcn: async () => {
         setSpeeds(context, 4);
       },
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,

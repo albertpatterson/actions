@@ -5,7 +5,7 @@ export function createAction(
 ): Action {
   return {
     filter: () => true,
-    handleResult: () => null,
+    handleResult: async () => null,
     ...part,
   };
 }

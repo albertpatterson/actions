@@ -65,7 +65,7 @@ function createActionDoer(tabDetails: TabDetails) {
     const result = await doActionMessageSystem.sendInTab(request);
 
     if (result) {
-      const reportData = fullActionSet[actionName].handleResult(
+      const reportData = await fullActionSet[actionName].handleResult(
         result.data.result
       );
 

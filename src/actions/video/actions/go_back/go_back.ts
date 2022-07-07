@@ -23,7 +23,7 @@ import { createAction } from '../../../shared';
 export const action: Action = createAction({
   label: '<-',
   tooltip: 'Go back 10s',
-  tabFcn: () => {
+  tabFcn: async () => {
     decrementTime(context, 10, undefined, true);
   },
   filter: (tabDetails: TabDetails) => tabDetails.hasVideo,

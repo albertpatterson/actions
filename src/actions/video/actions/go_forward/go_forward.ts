@@ -23,7 +23,7 @@ import { createAction } from '../../../shared';
 export const action: Action = createAction({
   label: '->',
   tooltip: 'Go Forwrd 10s',
-  tabFcn: () => {
+  tabFcn: async () => {
     incrementTime(context, 10);
   },
   filter: (tabDetails: TabDetails) => tabDetails.hasVideo,

@@ -30,7 +30,7 @@ export function getAction(context: Context): Action {
   return createAction({
     label: '>>',
     tooltip: 'Increase speed by 0.5',
-    tabFcn: () => {
+    tabFcn: async () => {
       speedUp(context);
     },
     filter: (tabDetails: TabDetails) => tabDetails.hasVideo,

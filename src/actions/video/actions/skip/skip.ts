@@ -33,7 +33,7 @@ export function getAction(context: Context): Action {
   return createAction({
     label: '->->',
     tooltip: 'Skip by 10s',
-    tabFcn: () => {
+    tabFcn: async () => {
       skip(context);
     },
     filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
