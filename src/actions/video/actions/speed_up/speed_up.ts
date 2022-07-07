@@ -14,7 +14,7 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { getVideos, setSpeeds } from '../../video/utils';
+import { getVideos, setSpeeds } from '../../util/utils';
 import { Context } from '../../context';
 import { Action } from '../../../types';
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';

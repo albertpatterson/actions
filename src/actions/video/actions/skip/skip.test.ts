@@ -14,7 +14,7 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { skip as skipUtil } from '../../video/utils';
+import { skip as skipUtil } from '../../util/utils';
 import { skip } from './skip';
 import { context } from '../../context';
 

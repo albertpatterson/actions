@@ -14,7 +14,7 @@
  * be preserved. Contributors provide an express grant of patent rights.
  */
 
-import { incrementTime } from '../../video/utils';
+import { incrementTime } from '../../util/utils';
 import { context } from '../../context';
 import { Action } from '../../../types';
 import { TabDetails } from '../../../../messaging/message_systems/get_active_tab_details/types';
