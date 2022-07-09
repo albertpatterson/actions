@@ -27,7 +27,7 @@ export function setSpeeds(context: Context, speed: number) {
 export function getActions(context: Context) {
   return {
     setSpeed1: createAction({
-      label: '1',
+      label: '1️⃣',
       tooltip: 'Set speed to 1',
       tabFcn: async () => {
         setSpeeds(context, 1);
@@ -35,7 +35,7 @@ export function getActions(context: Context) {
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
     }),
     setSpeed3: createAction({
-      label: '3',
+      label: '3️⃣',
       tooltip: 'Set speed to 3',
       tabFcn: async () => {
         setSpeeds(context, 3);
@@ -43,7 +43,7 @@ export function getActions(context: Context) {
       filter: (tabDetails: TabDetails) => tabDetails.hasVideo,
     }),
     setSpeed4: createAction({
-      label: '4',
+      label: '4️⃣',
       tooltip: 'Set speed to 4',
       tabFcn: async () => {
         setSpeeds(context, 4);

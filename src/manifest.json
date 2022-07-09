@@ -14,7 +14,6 @@
       "32": "icon/icon32.png"
     }
   },
-  "options_page": "options/index.html",
   "icons": {
     "16": "icon/icon16.png",
     "48": "icon/icon48.png",
@@ -30,6 +29,6 @@
       "js": ["injected/all_pages.js"]
     }
   ],
-  "homepage_url": "https://github.com/albertpatterson/chrome-extension-starter",
+  "homepage_url": "https://github.com/albertpatterson/actions",
   "permissions": ["tabs"]
 }

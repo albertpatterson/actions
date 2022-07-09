@@ -13,6 +13,9 @@ body {
   .action-button {
     white-space: noWrap;
     min-height: 25px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10%;
   }
 
   .message {

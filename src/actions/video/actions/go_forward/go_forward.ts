@@ -21,7 +21,7 @@ import { TabDetails } from '../../../../messaging/message_systems/get_active_tab
 import { createAction } from '../../../shared';
 
 export const action: Action = createAction({
-  label: '->',
+  label: '➡️',
   tooltip: 'Go Forwrd 10s',
   tabFcn: async () => {
     incrementTime(context, 10);

@@ -31,7 +31,7 @@ export function skip(context: Context) {
 
 export function getAction(context: Context): Action {
   return createAction({
-    label: '->->',
+    label: '⏭',
     tooltip: 'Skip by 10s',
     tabFcn: async () => {
       skip(context);

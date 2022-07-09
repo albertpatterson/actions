@@ -18,7 +18,7 @@ import { skip as skipUtil } from '../../util/utils';
 import { skip } from './skip';
 import { context } from '../../context';
 
-jest.mock('../../video/utils');
+jest.mock('../../util/utils');
 jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
 

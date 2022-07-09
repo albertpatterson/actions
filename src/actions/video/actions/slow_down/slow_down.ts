@@ -28,7 +28,7 @@ export function slowDown(context: Context) {
 
 export function getAction(context: Context): Action {
   return createAction({
-    label: '<<',
+    label: '⏬',
     tooltip: 'Reduce speed by 0.5',
     tabFcn: async () => {
       slowDown(context);

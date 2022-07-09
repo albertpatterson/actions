@@ -17,7 +17,6 @@
 import { getConfig as getBackgroundConfig } from './webpack/get.webpack.config.background.js';
 import { getConfig as getInjectedConfig } from './webpack/get.webpack.config.injected.js';
 import { getConfig as getPopupConfig } from './webpack/get.webpack.config.popup.js';
-import { getConfig as getOptionsConfig } from './webpack/get.webpack.config.options.js';
 import * as tools from 'simple_build_tools';
 import { CONSTANTS } from './constants.js';
 import path from 'path';
@@ -47,10 +46,6 @@ const bundlePopups = async () => {
 
   return tools.parallel(tasks)();
 };
-const bundleOptions = async () => {
-  const config = await getOptionsConfig(true);
-  return await tools.webpack(config);
-};
 const copyIcons = () =>
   tools.copyDir(CONSTANTS.ICONS_DIR_SRC, CONSTANTS.ICONS_DIR_DESC);
 const copyManifest = () =>
@@ -67,7 +62,6 @@ export const build = async () =>
         bundleBackground,
         bundleInjected,
         bundlePopups,
-        bundleOptions,
         copyIcons,
         copyManifest,
       ]),

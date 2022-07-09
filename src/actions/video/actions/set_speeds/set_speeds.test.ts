@@ -18,7 +18,7 @@ import { getVideos, setSpeeds as setSpeedsUtil } from '../../util/utils';
 import { setSpeeds } from './set_speeds';
 import { context } from '../../context';
 
-jest.mock('../../video/utils');
+jest.mock('../../util/utils');
 const getVideosMock = getVideos as jest.MockedFunction<typeof getVideos>;
 
 describe('setSpeeds', () => {
